@@ -104,3 +104,80 @@ Bool isBoardFull(p4Game_t *pGame)
     /* LE RESULTAT EST VRAI SINON. */
     return True;
 }
+
+/* Permet de savoir qui a gagner
+sortie :
+    - p4tr_player1Turn  => si c'est le tour player1 de jouer
+    - p4tr_player2Turn  => si c'est le tour player2 de jouer
+    - p4tr_player1Win   => si le tour player1 a gagne
+    - p4tr_player2Win   => si le tour player2 a gagne
+    - p4tr_draw         => si o
+*/
+p4Player_t whoWin3(p4Game_t *pGame)
+{
+    // etat du jeu
+    p4Player_t quiGagne = p4_PlayerNone;
+    // les jetons
+    p4Player_t coin1, coin2, coin3, coin4;
+    /* WIN WITH ... */
+
+    for (int c = 0; c < BOARD_COLUMN; c++)
+    {
+        for (int l = 0; l < BOARD_RAW; l++)
+        {
+            //* ... 4 COIN LINE
+            if (c <= (BOARD_COLUMN - 4))
+            {
+                coin1 = pGame->board[l][c];
+                coin2 = pGame->board[l][c + 1];
+                coin3 = pGame->board[l][c + 2];
+                coin4 = pGame->board[l][c + 3];
+                if ((p4_PlayerNone != coin1) && (coin1 == coin2) && (coin2 == coin3) && (coin3 == coin4))
+                {
+                    quiGagne = coin1;
+                    break;
+                }
+            }
+            //* ... 4 COIN COLUMN
+            if (l <= (BOARD_RAW - 4))
+            {
+                coin1 = pGame->board[l][c];
+                coin2 = pGame->board[l + 1][c];
+                coin3 = pGame->board[l + 2][c];
+                coin4 = pGame->board[l + 3][c];
+                if ((p4_PlayerNone != coin1) && (coin1 == coin2) && (coin2 == coin3) && (coin3 == coin4))
+                {
+                    quiGagne = coin1;
+                    break;
+                }
+            }
+            //* ... 4 COIN DIAGONAL BOTTOM-LEFT TO TOP-RIGHT
+            if ((l <= (BOARD_RAW - 4)) && (c <= (BOARD_COLUMN - 4)))
+            {
+                coin1 = pGame->board[l][c];
+                coin2 = pGame->board[l + 1][c + 1];
+                coin3 = pGame->board[l + 2][c + 2];
+                coin4 = pGame->board[l + 3][c + 3];
+                if ((p4_PlayerNone != coin1) && (coin1 == coin2) && (coin2 == coin3) && (coin3 == coin4))
+                {
+                    quiGagne = coin1;
+                    break;
+                }
+            }
+            //* ... 4 COIN DIAGONAL TOP-LEFT TO BOTTOM-RIGHT
+            if ((l <= (BOARD_RAW - 4)) && (4 <= c))
+            {
+                coin1 = pGame->board[l][c];
+                coin2 = pGame->board[l + 1][c - 1];
+                coin3 = pGame->board[l + 2][c - 2];
+                coin4 = pGame->board[l + 3][c - 3];
+                if ((p4_PlayerNone != coin1) && (coin1 == coin2) && (coin2 == coin3) && (coin3 == coin4))
+                {
+                    quiGagne = coin1;
+                    break;
+                }
+            }
+        }
+    }
+    return quiGagne;
+}

@@ -58,3 +58,34 @@ p4TurnResult_e p4Game_nextTurn(p4Game_t *pGame, int column)
 
     return p4tr_player1Turn;
 }
+
+/*
+Permet de retourner True si la colonne est jouable
+
+*/
+Bool isColumnPlayable(p4Game_t *pGame, int column)
+{
+    if (!((0 <= column) && (column < BOARD_COLUMN)))
+        return False;
+
+    for (int l = 0; l < BOARD_RAW; l++)
+        if (pGame->board[l][column] == p4_PlayerNone)
+            return True;
+
+    return False;
+}
+
+/*
+Permet de retourner l'indice jouable d'une colonne
+*/
+int getLignePlayable(p4Game_t *pGame, int column)
+{
+    int indice_res = 0;
+    for (int l = 0; l < BOARD_RAW; l++)
+    {
+        if (pGame->board[l][column] == p4_PlayerNone)
+            return indice_res;
+        indice_res++;
+    }
+    return indice_res;
+}

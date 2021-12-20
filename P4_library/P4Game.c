@@ -89,3 +89,18 @@ int getLignePlayable(p4Game_t *pGame, int column)
     }
     return indice_res;
 }
+
+/* Permet de savoir si le tableau est plein
+*/
+Bool isBoardFull(p4Game_t *pGame)
+{
+    // On parcour tous le tableau ...
+    for (int c = 0; c < BOARD_COLUMN; c++)
+        /* ...ON VEUT MONTRER QU'IL EST FAUX */
+        // ... si une cellule de la derniere ligne (la ligne BOARD_RAW-1 ) est  vide.
+        if (pGame->board[BOARD_RAW - 1][c] == p4_PlayerNone)
+            return False;
+
+    /* LE RESULTAT EST VRAI SINON. */
+    return True;
+}

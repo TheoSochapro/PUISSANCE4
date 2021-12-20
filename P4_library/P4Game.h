@@ -48,4 +48,5 @@ p4PlayerType_t p4Game_getCurrentPlayerType(p4Game_t *pGame);
 
 Bool isColumnPlayable(p4Game_t *pGame, int column); 
 int getLignePlayable(p4Game_t *pGame, int column); 
+Bool isBoardFull(p4Game_t *pGame)
 #endif // P4GAME_H

@@ -53,12 +53,6 @@ p4PlayerType_t p4Game_getCurrentPlayerType(p4Game_t *pGame)
     return result;
 }
 
-p4TurnResult_e p4Game_nextTurn(p4Game_t *pGame, int column)
-{
-
-    return p4tr_player1Turn;
-}
-
 /*
 Permet de retourner True si la colonne est jouable
 

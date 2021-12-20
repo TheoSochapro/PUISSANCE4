@@ -50,5 +50,5 @@ Bool isColumnPlayable(p4Game_t *pGame, int column);
 int getLignePlayable(p4Game_t *pGame, int column); 
 Bool isBoardFull(p4Game_t *pGame);
 p4Player_t whoWin3(p4Game_t *pGame);
-
+p4TurnResult_e p4Game_nextTurn(p4Game_t *pGame, int column);
 #endif // P4GAME_H

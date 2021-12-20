@@ -181,3 +181,70 @@ p4Player_t whoWin3(p4Game_t *pGame)
     }
     return quiGagne;
 }
+
+/* Permet de définir l'état avant/après d'un coup
+
+sortie :
+    - p4tr_player1Turn  => si c'est le tour player1 de jouer
+    - p4tr_player2Turn  => si c'est le tour player2 de jouer
+    - p4tr_player1Win   => si le tour player1 a gagne
+    - p4tr_player2Win   => si le tour player2 a gagne
+    - p4tr_draw         => si match nul
+*/
+p4TurnResult_e p4Game_nextTurn(p4Game_t *pGame, int column)
+{
+    /*********/
+    /* JOUER */
+    /*********/
+
+    //* qui joue?
+    p4Player_t quiJoue = pGame->currentPlayer;
+    if (isColumnPlayable(pGame, column))
+    {
+        //* la ligne ou il peut jouer
+        int ligneJouable = getLignePlayable(pGame, column);
+        //* il joue
+        pGame->board[ligneJouable][column] = quiJoue;
+    }
+
+    /********************************/
+    /* DONNER LE NOUVEL ETAT DU JEU */
+    /********************************/
+
+    // etat du jeu
+    p4TurnResult_e etatDuJeu = pGame->status;
+
+    switch (whoWin3(pGame))
+    {
+    case p4_Player1:
+        // fin du jeu
+        etatDuJeu = p4tr_player1Win;
+        break;
+    case p4_Player2:
+        // fin du jeu
+        etatDuJeu = p4tr_player2Win;
+        break;
+    case p4_PlayerNone:
+        if (isBoardFull(pGame))
+            // fin du jeu
+            etatDuJeu = p4tr_draw;
+        else
+        {
+            //* qui va jouer: on switch de joueur
+            if (quiJoue == p4_Player1)
+            {
+                pGame->currentPlayer = p4_Player2;
+                etatDuJeu = p4tr_player2Turn;
+            }
+            else if (quiJoue == p4_Player2)
+            {
+                pGame->currentPlayer = p4_Player1;
+                etatDuJeu = p4tr_player1Turn;
+            }
+        }
+        break;
+    }
+
+    pGame->status = etatDuJeu;
+    return etatDuJeu;
+}

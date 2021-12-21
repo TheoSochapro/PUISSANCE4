@@ -34,7 +34,7 @@ typedef struct P4_game {
 
     int board[BOARD_RAW][BOARD_COLUMN];
     p4Player_t currentPlayer;
-    int status;
+    p4TurnResult_e status;
 
     p4PlayerType_t p1Type, p2Type;
 
@@ -50,5 +50,6 @@ Bool isColumnPlayable(p4Game_t *pGame, int column);
 int getLignePlayable(p4Game_t *pGame, int column); 
 Bool isBoardFull(p4Game_t *pGame);
 p4Player_t whoWin3(p4Game_t *pGame);
-
+p4TurnResult_e p4Game_nextTurn(p4Game_t *pGame, int column);
+int nextComputerTurn(p4Game_t *pGame);
 #endif // P4GAME_H

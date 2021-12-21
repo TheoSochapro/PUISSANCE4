@@ -116,7 +116,7 @@ void MainWindow::endGame(){
 
 void MainWindow::algoIterate(){
 
-    int AI_Turn = 0;
+    int AI_Turn = nextComputerTurn(pGame);
     //AI_Turn = nextComputerTurn(pGame, getCurrentlayer(pGame));
 
     p4TurnResult_e playerResult = p4Game_nextTurn(pGame , AI_Turn);

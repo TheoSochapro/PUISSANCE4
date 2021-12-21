@@ -4,7 +4,7 @@
 #include "P4Game.h"
 
 /*  Initialiser les composants d'une partie de puissance4
-entrees :  p1Type ,  p2Type les type de joueur
+entrees :  p1Type,  p2Type, les types des joueurs
 sorties :  un pointeur vers une nouvelle partie
 */
 p4Game_t *NewP4Game(p4PlayerType_t p1Type, p4PlayerType_t p2Type)
@@ -186,7 +186,7 @@ p4Player_t whoWin3(p4Game_t *pGame)
 
 /* Permet de jouer un coup et définir l'état du jeu apres le coup
 entrees : pGame, pointeur d'une partie
-          column la colonne a jouer
+          column, la colonne a jouer
 sorties :
     - p4tr_player1Turn  => si c'est le tour player1 de jouer
     - p4tr_player2Turn  => si c'est le tour player2 de jouer
@@ -339,4 +339,60 @@ int nextComputerTurn(p4Game_t *pGame)
         }
 
     return coup_a_jouer;
+}
+
+    /*********/
+    /* JOUER */
+    /*********/
+
+    //* qui joue?
+    p4Player_t quiJoue = pGame->currentPlayer;
+    if (isColumnPlayable(pGame, column))
+    {
+        //* la ligne ou il peut jouer
+        int ligneJouable = getLignePlayable(pGame, column);
+        //* il joue
+        pGame->board[ligneJouable][column] = quiJoue;
+    }
+
+    /********************************/
+    /* DONNER LE NOUVEL ETAT DU JEU */
+    /********************************/
+
+    // etat du jeu
+    p4TurnResult_e etatDuJeu = pGame->status;
+
+    switch (whoWin3(pGame))
+    {
+    case p4_Player1:
+        // fin du jeu
+        etatDuJeu = p4tr_player1Win;
+        break;
+    case p4_Player2:
+        // fin du jeu
+        etatDuJeu = p4tr_player2Win;
+        break;
+    case p4_PlayerNone:
+        if (isBoardFull(pGame))
+            // fin du jeu
+            etatDuJeu = p4tr_draw;
+        else
+        {
+            //* qui va jouer: on switch de joueur
+            if (quiJoue == p4_Player1)
+            {
+                pGame->currentPlayer = p4_Player2;
+                etatDuJeu = p4tr_player2Turn;
+            }
+            else if (quiJoue == p4_Player2)
+            {
+                pGame->currentPlayer = p4_Player1;
+                etatDuJeu = p4tr_player1Turn;
+            }
+        }
+        break;
+    }
+
+    pGame->status = etatDuJeu;
+    return etatDuJeu;
 }

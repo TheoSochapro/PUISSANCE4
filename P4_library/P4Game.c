@@ -285,6 +285,8 @@ int nextComputerTurn(p4Game_t *pGame)
             score_col[col_jouer] = MAX_SCORE_COL;
             continue;
         }
+        else
+            score_col[col_jouer]++; // DONNER DU POID AU COLONNE JOUABLE
 
         for (int i = 0; i < MAX_SCORE_COL; i++)
         {

@@ -158,8 +158,8 @@ p4Player_t whoWin3(p4Game_t *pGame)
                     break;
                 }
             }
-            //* ... 4 COIN DIAGONAL TOP-LEFT TO BOTTOM-RIGHT
-            if ((l <= (BOARD_RAW - 4)) && (4 <= c))
+            //* ... 4 COIN DIAGONAL BOTTOM-RIGHT TO TOP-LEFT
+            if ((l <= (BOARD_RAW - 4)) && ((BOARD_COLUMN - 4) <= c))
             {
                 coin1 = pGame->board[l][c];
                 coin2 = pGame->board[l + 1][c - 1];

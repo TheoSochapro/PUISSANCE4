@@ -153,7 +153,7 @@ p4Player_t whoWin3(p4Game_t *pGame)
                     break;
                 }
             }
-            /******************** ... 4 JETONS EN DIAGONAL BAS-GAUCHE VERS HAUT-DROITE ***************/
+            /******************** ... 4 JETONS EN DIAGONAL GAUCHE VERS DROITE ***************/
             if ((l <= (BOARD_RAW - 4)) && (c <= (BOARD_COLUMN - 4)))
             {
                 coin1 = pGame->board[l][c];
@@ -166,7 +166,7 @@ p4Player_t whoWin3(p4Game_t *pGame)
                     break;
                 }
             }
-            /******************** ... 4 JETONS EN DIAGONALE BAS-DROITE VERS HAUT-GAUCHE  ***************/
+            /******************** ... 4 JETONS EN DIAGONALE DROITE VERS GAUCHE  ***************/
             if ((l <= (BOARD_RAW - 4)) && ((BOARD_COLUMN - 4) <= c))
             {
                 coin1 = pGame->board[l][c];
